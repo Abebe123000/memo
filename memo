@@ -1,13 +1,12 @@
-
 function fd() {
   local dir=$(find ${1:-.} -path '*/\.*' -prune \
-                  -o -type d -maxdepth 3 -print 2> /dev/null | fzf --preview "ls {}")
+                  -o -type d -maxdepth 3 -print 2> /dev/null | fzf --preview "ls -F --color=always {}")
   if [ -n "$dir" ]; then
     cd $dir
   fi
 }
 function fv(){
-  local file=$(find ${1:-.} -type f 2> /dev/null | fzf --preview "head -n 100 {}")
+  local file=$(find ${1:-.} -path '*/\.*' -prune -o -type f -print 2> /dev/null | fzf --preview "head -n 100 {}")
   if [ -n "$file" ]; then
     vi $file
   fi
